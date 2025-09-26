@@ -1,0 +1,155 @@
+*{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Berling Antiqua';
+    height: 200vh;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 23vh;
+    
+
+.head-logo{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 13vh;
+    width: 100%;
+    background-color: #283971;
+
+    img{
+        height: 10vh;
+        width: auto;
+        margin-left: 7px;
+    }
+}
+    
+
+a{
+    text-decoration: none;
+    color: white;
+    height: 10vh;
+    width: 5vw;
+    padding-top: 3.8vh;
+    padding-left: 1.3vw;
+}
+a:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+}
+.nav{
+    display: flex;
+    justify-content: flex-start;
+    align-items:flex-start;
+    width: 100%;
+    border: 2px solid black;
+    gap: 10px;
+    background-color: #D4B483;
+    margin: 0px;
+}
+.nav-signout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 7px;
+    height: 100%;
+
+}
+
+button{
+    padding: 10px 15px;
+    border: none;
+    color: black;
+    cursor: pointer;
+    background: none;
+    font-family: 'Berling Antiqua';
+}
+button:hover{
+    color: white;
+}
+
+.hero-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200vh;
+    width: 100%;
+    margin: 0px;
+
+.top{
+    display: flex;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 100%;
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(img/topbg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+.middle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    gap: 15px;
+    height: 120vh;
+    background-color: white;
+    width: 100%;
+
+    &__1, &__3{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: white;
+        height: 20%;
+    }
+    &__2, &__4{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgrey;
+        height: 20%;
+        width: 100%;
+    }
+    &__5{
+        width: 100%;
+        background-color: white;
+        height: 20%;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.bottom{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    padding-top: 15px;
+    height: 30vh;
+    background-color: #283971;
+    width: 100%;
+}
+}
+
+.borrow{
+    width: 10vw;
+    background-color: #D4B483;
+}
+
+.return{
+    width: 10vw;
+    background-color: #D4B483;
+}

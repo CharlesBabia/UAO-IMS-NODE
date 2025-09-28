@@ -23,6 +23,8 @@ body{
     height: 13vh;
     width: 100%;
     background-color: #283971;
+    color: white;
+    gap: 10px;
 
     img{
         height: 10vh;
@@ -49,7 +51,6 @@ a:hover{
     justify-content: flex-start;
     align-items:flex-start;
     width: 100%;
-    border: 2px solid black;
     gap: 10px;
     background-color: #D4B483;
     margin: 0px;
@@ -86,11 +87,11 @@ button:hover{
 
 .top{
     display: flex;
-    height: 50vh;
+    height: 70vh;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
     width: 100%;
+    border: 2px solid black;
     background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(img/topbg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -113,10 +114,12 @@ button:hover{
         align-items: center;
         width: 100%;
         background-color: white;
+        flex-direction: column;
         height: 20%;
     }
     &__2, &__4{
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         background-color: lightgrey;

@@ -1,4 +1,4 @@
-// Password toggle (login)
+
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password");
 
@@ -9,7 +9,7 @@ if (togglePassword) {
   });
 }
 
-// Password toggle (register)
+
 const toggleRegPassword = document.querySelector("#toggleRegPassword");
 const regPassword = document.querySelector("#regPassword");
 
@@ -20,7 +20,7 @@ if (toggleRegPassword) {
   });
 }
 
-// Form switching
+
 const showLogin = document.querySelector("#showLogin");
 const showRegister = document.querySelector("#showRegister");
 const loginForm = document.querySelector("#loginForm");

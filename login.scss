@@ -1,10 +1,10 @@
-// Variables
+
 $primary: #2e4a9e;
 $secondary: #d4af37;
 $text-dark: #333;
 $bg-light: #f7f9fc;
 
-// Reset
+
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +22,7 @@ body {
   height: 100vh;
 }
 
-// Sidebar
+
 .sidebar {
   width: 260px;
   background: $primary;
@@ -69,6 +69,40 @@ body {
 .sidebar nav a.active {
   font-weight: bold;
   color: $secondary;
+}
+
+.save-eq-btn{
+  margin-top: auto;
+  background: $secondary;
+  color: $primary;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+
+.delete-eq-btn{
+  margin-top: 1rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
 }
 
 

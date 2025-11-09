@@ -1,0 +1,152 @@
+.hero-content {
+    background: #e9edf5;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px auto 0 auto;
+    max-width: 600px;
+
+    .top h1 {
+        color: #2d3e70;
+        font-size: 2.2em;
+        margin-bottom: 20px;
+    }
+
+    .middle__1 h1 {
+        color: #3b7a57;
+        font-size: 1.7em;
+        margin-bottom: 18px;
+    }
+
+    .middle__2, .middle__3, .middle__4 {
+        background: #f5f7fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+        padding: 18px 30px;
+        margin: 12px 0;
+        width: 420px;
+        text-align: left;
+
+        h1 {
+            font-size: 1.3em;
+            color: #2d3e70;
+            margin-bottom: 8px;
+        }
+        p {
+            color: #444;
+            font-size: 1em;
+        }
+    }
+
+    .middle__5 {
+        margin: 28px 0 18px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .manage-equipment {
+        background: #2d3e70;
+        color: #fff;
+        font-size: 1.1em;
+        font-weight: 600;
+        padding: 16px 38px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+        transition: background 0.2s, transform 0.2s;
+    }
+    .manage-equipment:hover {
+        background: #1b2540;
+        transform: translateY(-2px) scale(1.03);
+    }
+
+    .manage-penalties {
+        background: #2d3e70;
+        color: #fff;
+        font-size: 1.1em;
+        font-weight: 600;
+        padding: 16px 38px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+        transition: background 0.2s, transform 0.2s;
+    }
+    .manage-penalties:hover {
+        background: #1b2540;
+        transform: translateY(-2px) scale(1.03);
+    }
+
+    .bottom p {
+        color: #888;
+        font-size: 1em;
+        margin-top: 30px;
+    }
+}
+
+.header {
+    background: #2d3e70;
+    color: #fff;
+    padding: 18px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .head-logo {
+        display: flex;
+        align-items: center;
+
+        .logo {
+            height: 54px;
+            margin-right: 18px;
+        }
+        h2 {
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+
+        h3 {
+            margin-right: 18px;
+            font-size: 1em;
+            font-weight: 400;
+        }
+        .nav-signout .signout {
+            background: #fff;
+            color: #2d3e70;
+            border: 1px solid #2d3e70;
+            border-radius: 5px;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-signout .signout:hover {
+            background: #2d3e70;
+            color: #fff;
+        }
+    }
+}
+
+.footer {
+    background: #f5f7fa;
+    color: #2d3e70;
+    text-align: center;
+    padding: 14px 0;
+    font-size: 1em;
+    margin-top: 40px;
+}
+
+// ...existing code...

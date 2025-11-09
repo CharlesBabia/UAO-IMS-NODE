@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>UAO-IMS - Return Equipment</title>
+  <link rel="stylesheet" href="login.css">
+  <style>
+    .sidebar nav a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .card ul li {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <nav>
+        <a href="admin.html"><img src="img/cruslogo.png" alt="XU Crusaders Logo" style="width:100px; display:block; margin:0 auto 10px auto;"></a>
+        <a href="#" id="showReturn" class="active">Return Equipment</a>
+        <a href="#" id="showConfirm">Confirm Borrow Requests</a>
+        <a href="#" id="showManage">Manage Equipment</a>
+        <a href="#" id="showAdd">Add Equipment</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="card">
+        <div class="card-logo">
+          <img src="img/cruslogo.png" alt="XU Crusaders Logo">
+        </div>
+        <h2 id="formTitle"><span class="highlight">Equipment Management</span></h2>
+        <p id="formSubtitle">Select a tab to manage equipment</p>
+
+       
+        <div id="returnSection">
+          <h2>Return <span class="highlight">Equipment</span></h2>
+          <ul id="borrowedList" style="text-align:left; padding-left:0; list-style:none;"></ul>
+        </div>
+
+       
+        <div id="confirmSection" style="display:none;">
+          <h2>Confirm <span class="highlight">Borrow Requests</span></h2>
+          <ul id="confirmList" style="text-align:left; padding-left:0; list-style:none;"></ul>
+        </div>
+
+        
+        <div id="manageSection" style="display:none;">
+          <ul id="manageEquipmentList" style="text-align:left; padding-left:0; list-style:none;"></ul>
+        </div>
+
+        <div id="addSection" style="display: none;">
+          <h2>Add New <span class="highlight">Equipment</span></h2>
+          <form id="addEquipmentForm">
+            <label for="equipmentName">Equipment Name:</label><br>
+            <input type="text" id="equipmentName" name="equipmentName" placeholder="Name of Equipment" required><br><br>
+            <label for="equipmentCategory">Category:</label><br>
+            <select id="equipmentCategory" name="equipmentCategory" required>
+              <option value="">Select Category</option>
+              <option value="ball">Ball</option>
+              <option value="training equipment">Training Equipment</option>
+              <option value="weights">Weights</option>
+              <option value="protective equipment">Protective Equipment</option>
+              <option value="miscellaneous">Miscellaneous</option>
+            </select><br><br>
+            <label for="equipmentQuantity">Quantity:</label><br>
+            <input type="number" id="equipmentQuantity" name="equipmentQuantity" placeholder="Quantity of Equipment" required min="1"><br><br>
+            <button type="submit" id="addEquipment">Add Equipment</button>
+          </form>
+        </div>
+
+        <footer>
+          <p>© 2025 University Athletics Office - Xavier University</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+
+  <script type="module" src="js/return-manage.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+.hero-content {
+  background: #e9edf5;
+  border-radius: 12px;
+  -webkit-box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+          box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+  padding: 40px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 32px auto 0 auto;
+  max-width: 600px;
+}
+
+.hero-content .top h1 {
+  color: #2d3e70;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+}
+
+.hero-content .middle__1 h1 {
+  color: #3b7a57;
+  font-size: 1.7em;
+  margin-bottom: 18px;
+}
+
+.hero-content .middle__2, .hero-content .middle__3, .hero-content .middle__4 {
+  background: #f5f7fa;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+          box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+  padding: 18px 30px;
+  margin: 12px 0;
+  width: 420px;
+  text-align: left;
+}
+
+.hero-content .middle__2 h1, .hero-content .middle__3 h1, .hero-content .middle__4 h1 {
+  font-size: 1.3em;
+  color: #2d3e70;
+  margin-bottom: 8px;
+}
+
+.hero-content .middle__2 p, .hero-content .middle__3 p, .hero-content .middle__4 p {
+  color: #444;
+  font-size: 1em;
+}
+
+.hero-content .middle__5 {
+  margin: 28px 0 18px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.hero-content .manage-equipment {
+  background: #2d3e70;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 16px 38px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+          box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+  -webkit-transition: background 0.2s, -webkit-transform 0.2s;
+  transition: background 0.2s, -webkit-transform 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, -webkit-transform 0.2s;
+}
+
+.hero-content .manage-equipment:hover {
+  background: #1b2540;
+  -webkit-transform: translateY(-2px) scale(1.03);
+          transform: translateY(-2px) scale(1.03);
+}
+
+.hero-content .manage-penalties {
+  background: #2d3e70;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 16px 38px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+          box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+  -webkit-transition: background 0.2s, -webkit-transform 0.2s;
+  transition: background 0.2s, -webkit-transform 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, -webkit-transform 0.2s;
+}
+
+.hero-content .manage-penalties:hover {
+  background: #1b2540;
+  -webkit-transform: translateY(-2px) scale(1.03);
+          transform: translateY(-2px) scale(1.03);
+}
+
+.hero-content .bottom p {
+  color: #888;
+  font-size: 1em;
+  margin-top: 30px;
+}
+
+.header {
+  background: #2d3e70;
+  color: #fff;
+  padding: 18px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .head-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .head-logo .logo {
+  height: 54px;
+  margin-right: 18px;
+}
+
+.header .head-logo h2 {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.header .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .nav h3 {
+  margin-right: 18px;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.header .nav .nav-signout .signout {
+  background: #fff;
+  color: #2d3e70;
+  border: 1px solid #2d3e70;
+  border-radius: 5px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s;
+}
+
+.header .nav .nav-signout .signout:hover {
+  background: #2d3e70;
+  color: #fff;
+}
+
+.footer {
+  background: #f5f7fa;
+  color: #2d3e70;
+  text-align: center;
+  padding: 14px 0;
+  font-size: 1em;
+  margin-top: 40px;
+}
+/*# sourceMappingURL=admin.css.map */

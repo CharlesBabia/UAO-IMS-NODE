@@ -79,6 +79,40 @@ body {
   color: #d4af37;
 }
 
+.save-eq-btn {
+  margin-top: auto;
+  background: #d4af37;
+  color: #2e4a9e;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+}
+
+.save-eq-btn:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.delete-eq-btn {
+  margin-top: 1rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+}
+
+.delete-eq-btn:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
 .main-content {
   -webkit-box-flex: 1;
       -ms-flex: 1;

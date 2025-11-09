@@ -1,0 +1,170 @@
+$primary: #2e4a9e;
+$secondary: #d4af37;
+$text-dark: #333;
+$bg-light: #f7f9fc;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: $bg-light;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: $primary;
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 4px solid $secondary;
+
+  .logo {
+    text-align: center;
+
+    img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+
+  nav {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+
+      &:hover {
+        color: $secondary;
+      }
+    }
+  }
+}
+
+.sidebar nav a.active {
+  font-weight: bold;
+  color: $secondary;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+
+    .card-logo img {
+      width: 70px;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+
+      .highlight {
+        color: $secondary;
+      }
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: $text-dark;
+      margin-bottom: 1.5rem;
+    }
+
+    form, #searchSection {
+      text-align: left;
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        display: block;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 0.7rem;
+        background: $primary;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
+    .mark-returned-btn, .add-btn, .reduce-btn {
+      background: $secondary;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+
+    #equipmentList {
+      margin-top: 1rem;
+      li {
+        padding: 0.5rem 0.7rem;
+        border-bottom: 1px solid #eee;
+        font-size: 1rem;
+      }
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #777;
+    }
+  }
+}

@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f7f9fc;
+  height: 100vh;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: #2e4a9e;
+  color: white;
+  padding: 2rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-right: 4px solid #d4af37;
+}
+
+.sidebar nav {
+  margin-top: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.sidebar nav a:hover {
+  color: #d4af37;
+}
+
+.sidebar nav a.active {
+  font-weight: bold;
+  color: #d4af37;
+}
+
+.main-content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main-content .card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.main-content .card .card-logo img {
+  width: 70px;
+  margin-bottom: 1rem;
+}
+
+.main-content .card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.main-content .card h2 .highlight {
+  color: #d4af37;
+}
+
+.main-content .card p {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.main-content .card #penaltyList {
+  margin-top: 1rem;
+}
+
+.main-content .card #penaltyList li {
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.main-content .card #penaltyList li button.clear-penalty-btn {
+  background: #d4af37;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.95em;
+  cursor: pointer;
+  margin-top: 5px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.main-content .card #penaltyList li button.clear-penalty-btn:hover {
+  opacity: 0.85;
+}
+
+.main-content .card footer {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: #777;
+}
+/*# sourceMappingURL=penalties.css.map */

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAO-IMS - Borrow Equipment</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <a href="user.html"><img src="img/cruslogo.png" alt="XU Crusaders Logo"></a>
+        <h2>UAO-IMS & BS</h2>
+      </div>
+      <nav>
+        <a href="#" id="showBorrow" class="active">Borrow Equipment</a>
+        <a href="#" id="showSearch">Search Equipment</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="card">
+        <div class="card-logo">
+          <img src="img/cruslogo.png" alt="XU Crusaders Logo">
+        </div>
+        <h2 id="formTitle">Borrow <span class="highlight">Equipment</span></h2>
+        <p id="formSubtitle">Fill out the form to borrow equipment</p>
+
+        
+        <form id="borrowForm">
+          <label>Equipment</label>
+          <select class="equipment-dropdown" id="equipmentDropdown" required>
+          </select>
+
+          <label>Quantity</label>
+          <input type="number" class="quantity-input" placeholder="Quantity" required>
+
+          <label>Borrowing Date</label>
+          <input type="date" class="date-input" required>
+
+          <label>Return Date</label>
+          <input type="date" class="return-date-input" required>
+
+          <button type="submit" class="login-btn">Borrow</button>
+        </form>
+
+        
+        <div id="searchSection" style="display:none;">
+          <label for="searchInput">Search Equipment</label>
+          <input type="text" id="searchInput" placeholder="Search by name..." style="margin-bottom:1rem; width:100%;">
+          <label for="filterSelect">Filter</label>
+          <select id="filterSelect" style="margin-bottom:1rem; width:100%;">
+            <option value="">All</option>
+          </select>
+          <ul id="equipmentList" style="text-align:left; padding-left:0; list-style:none;">
+          </ul>
+        </div>
+
+        <footer>
+          <p>© 2025 University Athletics Office - Xavier University</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/borrow-return.js" type="module"></script>
+</body>
+</html>

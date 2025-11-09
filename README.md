@@ -23,6 +23,6 @@ Admin can add new equipment<br>
 Admin can update the quantity of equipment as well as their condition<br>
 Equipment marked as damaged can no longer be updated by the admin and the only option is the delete them
 
-#THIS IS STILL FOR TESTING
+# THIS IS STILL FOR TESTING
 RUN ON Localhost or Live Server using Live Server extension on Visual Studio Code<br>
 

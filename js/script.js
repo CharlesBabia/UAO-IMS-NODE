@@ -142,8 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("fullName", "User");
       }
       if (role === "admin") {
+        alert("Login Successfully")
         window.location.href = "admin.html";
       } else {
+        alert("Login Successfully")
         window.location.href = "user.html";
       }
     } catch (error) {

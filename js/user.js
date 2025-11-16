@@ -1,3 +1,6 @@
+import { auth } from "./firebase-config.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
 document.addEventListener("DOMContentLoaded", function() {
     const userName = localStorage.getItem("fullName") || "USER NAME";
     document.getElementById("userName").textContent = userName;
@@ -11,6 +14,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const signOutBtn = document.querySelector(".signout");
     signOutBtn.addEventListener("click", () => {
-        window.location.href = "index.html";
+        if (confirm("Are you sure you want to sign out?")) {
+            signOut(auth).then(() => {
+                localStorage.clear();
+                alert("Signed out successfully.");
+                window.location.href = "index.html";
+            }).catch((error) => {
+                alert("Sign out failed.");
+            });
+        }
     });
 });

@@ -5,6 +5,8 @@ import {
 import {
   ref as storageRef, uploadBytes, getDownloadURL
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+import { Timestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // responsible for tab switching in sidebar
@@ -100,9 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const equipmentId = document.getElementById("equipmentDropdown").value;
       const quantity = parseInt(borrowForm.querySelector(".quantity-input").value);
-      const borrowDate = borrowForm.querySelector(".date-input").value;
-      const returnDate = borrowForm.querySelector(".return-date-input").value;
+      const borrowDateInput = borrowForm.querySelector(".date-input").value;
+      const returnDateInput = borrowForm.querySelector(".return-date-input").value;
+      const borrowDate = Timestamp.fromDate(new Date(borrowDateInput));
+      const returnDate = Timestamp.fromDate(new Date(returnDateInput));
       const borrower = localStorage.getItem("fullName") || "Unknown";
+      
 
       console.log({ equipmentId, quantity, borrowDate, returnDate, borrower });
 
@@ -122,6 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Please select a return date.");
         return;
       }
+
+
 
       // checks if user has penalty or not
       const userQuery = query(collection(db, "users"), where("fullName", "==", borrower));

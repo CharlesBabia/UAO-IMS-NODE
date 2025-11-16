@@ -1,35 +1,102 @@
 import { app, db } from "./firebase-config.js";
 import {
-  collection, getDocs, doc, updateDoc, query, where, addDoc, deleteDoc
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+  addDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-// returns
+
+// ====================== RETURN EQUIPMENT TAB ======================
 async function renderBorrowedList() {
+
+  async function sendMail() {
+    try {
+      const res = await fetch("http://localhost:3000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: "20220026531@my.xu.edu.ph",
+          subject: "Overdue Equipment Notice",
+          text: "Your borrowed equipment is overdue. Please return it immediately.",
+          html: "<b>Your borrowed equipment is overdue. Please return it immediately.</b>",
+        }),
+      });
+  
+      const data = await res.json();
+      if (data.success) {
+        console.log("Email sent successfully!");
+      } else {
+        console.error("Failed to send email:", data.error);
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  }
+
   const borrowedList = document.getElementById('borrowedList');
   if (!borrowedList) return;
+
   borrowedList.innerHTML = '';
+
+  function parseFirestoreTimestamp(ts) {
+    if (!ts) return null;
+  
+    // Firestore Timestamp objects have a .toDate() method
+    if (typeof ts.toDate === "function") {
+      return ts.toDate();
+    }
+  
+    // Fallback: if it's a seconds/nanoseconds object
+    if (ts.seconds) {
+      return new Date(ts.seconds * 1000);
+    }
+  
+    // Fallback: try parsing string
+    return new Date(ts);
+  }
+  
+
   const querySnapshot = await getDocs(collection(db, "borrowRequests"));
   querySnapshot.forEach(docSnap => {
     const req = docSnap.data();
 
-    // shows requests with "borrowed" status
+    const borrowDate = req.borrowDate?.toDate ? req.borrowDate.toDate() : new Date(req.borrowDate.seconds * 1000);
+    const returnDate = req.returnDate?.toDate ? req.returnDate.toDate() : new Date(req.returnDate.seconds * 1000);
+
+    // Shows requests with "borrowed" status
     if (req.status === "borrowed") {
       const li = document.createElement('li');
       li.innerHTML = `
         <strong>${req.equipment}</strong><br>
-        <span style="font-size:0.95em;">Borrower: ${req.borrower} | Borrow Date: ${req.borrowDate} | Return Date: ${req.returnDate} | Quantity: ${req.quantity}</span>
+        <span style="font-size:0.95em;">
+          Borrower: ${req.borrower} | Borrow Date: ${borrowDate ? borrowDate.toLocaleString() : "N/A"} |
+          Return Date: ${returnDate ? returnDate.toLocaleString() : "N/A"} | Quantity: ${req.quantity}
+        </span>
+        ${req.returnDate < new Date() ? '<p style="color:red; font-weight:bold; margin-top:5px;">Overdue!</p>' : ''}
         <select class="return-condition" data-id="${docSnap.id}" style="margin-left:10px;">
           <option value="">Set Condition</option>
           <option value="Good">Good</option>
           <option value="Damaged">Damaged</option>
         </select>
-        <button class="mark-returned-btn" data-id="${docSnap.id}" data-eq="${req.equipment}" data-qty="${req.quantity}" style="margin-left:5px; float:right;">Mark as Returned</button>
+        <button class="mark-returned-btn" data-id="${docSnap.id}" data-eq="${req.equipment}" data-qty="${req.quantity}" style="margin-left:5px; float:right;">
+          Mark as Returned
+        </button>
       `;
       borrowedList.appendChild(li);
     }
+    if(returnDate < new Date()){
+      sendMail();
+    }
   });
 
-  // mark equipment as returned
+
+
+  // Mark equipment as returned
   borrowedList.querySelectorAll('.mark-returned-btn').forEach(btn => {
     btn.addEventListener('click', async function() {
       const id = this.getAttribute('data-id');
@@ -37,6 +104,7 @@ async function renderBorrowedList() {
       const qty = parseInt(this.getAttribute('data-qty'));
       const select = borrowedList.querySelector(`.return-condition[data-id="${id}"]`);
       const condition = select ? select.value : "";
+
       if (!condition) {
         alert("Please select return condition.");
         return;
@@ -44,40 +112,41 @@ async function renderBorrowedList() {
 
       await updateDoc(doc(db, "borrowRequests", id), { status: "returned", condition });
 
-      // search equipment(name)
+      // Search equipment(name)
       const eqQuery = query(collection(db, "equipment"), where("name", "==", eqName), where("condition", "==", "good"));
       const eqSnapshot = await getDocs(eqQuery);
+
       if (!eqSnapshot.empty) {
         const eqDoc = eqSnapshot.docs[0];
         const eqRef = doc(db, "equipment", eqDoc.id);
         const eqData = eqDoc.data();
 
-      // function to create new damaged equipment entry to seperate from good ones
+        // Create new damaged equipment entry (separate from good ones)
         if (condition === "Damaged") {
-          
           await addDoc(collection(db, "equipment"), {
             name: eqData.name,
             category: eqData.category,
             quantity: qty,
             condition: "damaged"
           });
-          // will not add quantity back to good equipment pool if marked as damaged on return
 
-          // if returned equipment is marked as damaged, set user penalty to true
+          // If returned equipment is marked as damaged, set user penalty to true
           const reqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
           if (!reqDoc.empty) {
             const reqData = reqDoc.docs[0].data();
             const borrowerName = reqData.borrower;
+
             // Finds user by name
             const userQuery = query(collection(db, "users"), where("fullName", "==", borrowerName));
             const userSnap = await getDocs(userQuery);
+
             if (!userSnap.empty) {
               const userDoc = userSnap.docs[0];
               await updateDoc(doc(db, "users", userDoc.id), { penalty: true });
             }
           }
         } else {
-          // adds quantity back to equipment in database after return if equipment is not damaged
+          // Adds quantity back to equipment in database after return if not damaged
           await updateDoc(eqRef, { quantity: (eqData.quantity || 0) + qty });
         }
       }
@@ -87,23 +156,31 @@ async function renderBorrowedList() {
   });
 }
 
-// shows borrow requests to confirm
+// confirm borrow requests
 async function renderConfirmList() {
   const confirmList = document.getElementById('confirmList');
   if (!confirmList) return;
+
   confirmList.innerHTML = '';
+
   const querySnapshot = await getDocs(collection(db, "borrowRequests"));
   querySnapshot.forEach(docSnap => {
     const req = docSnap.data();
+    const borrowDate = req.borrowDate?.toDate ? req.borrowDate.toDate() : new Date(req.borrowDate.seconds * 1000);
+    const returnDate = req.returnDate?.toDate ? req.returnDate.toDate() : new Date(req.returnDate.seconds * 1000);
 
     if (req.status === "pending") {
       const imageHtml = req.imageUrl
         ? `<div style="margin:8px 0;"><img src="${req.imageUrl}" alt="Attached Image" style="max-width:120px;max-height:120px;border-radius:8px;border:1px solid #ccc;"></div>`
         : '';
+
       const li = document.createElement('li');
       li.innerHTML = `
         <strong>${req.equipment}</strong> (x${req.quantity})<br>
-        <span style="font-size:0.95em;">Borrower: ${req.borrower} | Borrow: ${req.borrowDate} | Return: ${req.returnDate}</span>
+        <span style="font-size:0.95em;">
+          Borrower: ${req.borrower} | Borrow Date: ${borrowDate ? borrowDate.toLocaleString() : "N/A"} |
+          Return Date: ${returnDate ? returnDate.toLocaleString() : "N/A"} | Quantity: ${req.quantity}
+        </span>
         ${imageHtml}
         <button class="confirm-borrow-btn" data-id="${docSnap.id}" data-eq="${req.equipment}" data-qty="${req.quantity}" style="margin-left:10px; float:right;">Confirm</button>
         <button class="reject-borrow-btn" data-id="${docSnap.id}" style="margin-left:10px; float:right;">Reject</button>
@@ -112,16 +189,17 @@ async function renderConfirmList() {
     }
   });
 
-  // confirm borrows
+  // Confirm borrows
   confirmList.querySelectorAll('.confirm-borrow-btn').forEach(btn => {
     btn.addEventListener('click', async function() {
       const id = this.getAttribute('data-id');
       const eqName = this.getAttribute('data-eq');
       const qty = parseInt(this.getAttribute('data-qty'));
 
-      // find equipments by name
+      // Find equipments by name
       const eqQuery = query(collection(db, "equipment"), where("name", "==", eqName));
       const eqSnapshot = await getDocs(eqQuery);
+
       if (!eqSnapshot.empty) {
         const eqDoc = eqSnapshot.docs[0];
         const eqRef = doc(db, "equipment", eqDoc.id);
@@ -135,7 +213,7 @@ async function renderConfirmList() {
     });
   });
 
-  // reject borrows
+  // Reject borrows
   confirmList.querySelectorAll('.reject-borrow-btn').forEach(btn => {
     btn.addEventListener('click', async function() {
       const id = this.getAttribute('data-id');
@@ -145,18 +223,19 @@ async function renderConfirmList() {
   });
 }
 
-// manage equipment tab
+// ====================== MANAGE EQUIPMENT TAB ======================
 async function renderManageEquipment() {
   const manageList = document.getElementById('manageEquipmentList');
   if (!manageList) return;
+
   manageList.innerHTML = '';
 
-
-  // load equipment and makes sure that damaged equipment cannot be edited
+  // Load equipment and make sure that damaged equipment cannot be edited
   const querySnapshot = await getDocs(collection(db, "equipment"));
   querySnapshot.forEach(docSnap => {
     const eq = docSnap.data();
     const isDamaged = eq.condition === "damaged";
+
     const li = document.createElement('li');
     li.innerHTML = `
       <strong>${eq.name}</strong> (${eq.category})<br>
@@ -175,9 +254,10 @@ async function renderManageEquipment() {
     manageList.appendChild(li);
   });
 
-  // save changes
+  // Save changes
   manageList.querySelectorAll('.save-eq-btn').forEach(btn => {
     if (btn.disabled) return;
+
     btn.addEventListener('click', async function() {
       const id = this.getAttribute('data-id');
       const qtyInput = manageList.querySelector(`.eq-qty[data-id="${id}"]`);
@@ -185,17 +265,13 @@ async function renderManageEquipment() {
       const newQty = parseInt(qtyInput.value) || 0;
       const newCondition = condSelect.value;
 
-      await updateDoc(doc(db, "equipment", id), {
-        quantity: newQty,
-        condition: newCondition
-      });
-
+      await updateDoc(doc(db, "equipment", id), { quantity: newQty, condition: newCondition });
       alert("Equipment updated successfully!");
       renderManageEquipment();
     });
   });
 
-  // delete equipment
+  // Delete equipment
   manageList.querySelectorAll('.delete-eq-btn').forEach(btn => {
     btn.addEventListener('click', async function() {
       const id = this.getAttribute('data-id');
@@ -208,34 +284,31 @@ async function renderManageEquipment() {
   });
 }
 
-
+// ====================== ADD EQUIPMENT ======================
 const showAdd = document.getElementById('showAdd');
 const addSection = document.getElementById('addSection');
 const addEquipmentForm = document.getElementById('addEquipmentForm');
 
-// add equipment
 if (addEquipmentForm) {
   addEquipmentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const name = document.getElementById('equipmentName').value.trim();
     const category = document.getElementById('equipmentCategory').value.trim();
     const quantity = parseInt(document.getElementById('equipmentQuantity').value);
+
     if (!name || !category || isNaN(quantity) || quantity < 1) {
       alert("Please enter valid equipment name, category, and quantity.");
       return;
     }
-    await addDoc(collection(db, "equipment"), {
-      name,
-      category,
-      quantity,
-      condition: "good"
-    });
+
+    await addDoc(collection(db, "equipment"), { name, category, quantity, condition: "good" });
     alert("Equipment added successfully!");
     addEquipmentForm.reset();
   });
 }
 
-// tabswitch
+// ====================== TAB SWITCHING ======================
 const showReturn = document.getElementById('showReturn');
 const showConfirm = document.getElementById('showConfirm');
 const showManage = document.getElementById('showManage');
@@ -309,4 +382,3 @@ if (showReturn && showConfirm && showManage && showAdd && returnSection && confi
 document.addEventListener("DOMContentLoaded", () => {
   renderBorrowedList();
 });
-

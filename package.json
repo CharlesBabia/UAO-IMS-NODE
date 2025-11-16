@@ -1,5 +1,20 @@
 {
   "dependencies": {
-    "firebase": "^12.3.0"
-  }
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "firebase": "^12.3.0",
+    "nodemailer": "^7.0.10"
+  },
+  "name": "uao-ims(node)",
+  "description": "MUCH PREFERRED TO BE RUN ON VISUAL STUDIO CODE AND HAVE SASS WATCHER INSTALLED IN ORDER FOR SCSS TO FUNCTION",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
 }

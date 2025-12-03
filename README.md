@@ -28,3 +28,4 @@ then create a env file and put EMAIL_USER = "the email address" and EMAIL_PASS =
 
 # THIS IS STILL FOR TESTING
 RUN ON Localhost or Live Server using Live Server extension on Visual Studio Code<br>
+

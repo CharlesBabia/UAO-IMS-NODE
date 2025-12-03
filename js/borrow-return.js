@@ -5,6 +5,8 @@ import {
 import {
   ref as storageRef, uploadBytes, getDownloadURL
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+import { Timestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // responsible for tab switching in sidebar
@@ -100,11 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const equipmentId = document.getElementById("equipmentDropdown").value;
       const quantity = parseInt(borrowForm.querySelector(".quantity-input").value);
-      const borrowDate = borrowForm.querySelector(".date-input").value;
-      const returnDate = borrowForm.querySelector(".return-date-input").value;
+      const borrowDateInput = borrowForm.querySelector(".date-input").value;
+      const returnDateInput = borrowForm.querySelector(".return-date-input").value;
+      const borrowDate = Timestamp.fromDate(new Date(borrowDateInput));
+      const returnDate = Timestamp.fromDate(new Date(returnDateInput));
       const borrower = localStorage.getItem("fullName") || "Unknown";
+      const email = localStorage.getItem("email" || "Unkown");
+      
 
-      console.log({ equipmentId, quantity, borrowDate, returnDate, borrower });
+      console.log({ equipmentId, quantity, borrowDate, returnDate, borrower, email });
 
       if (!equipmentId) {
         alert("Please select equipment.");
@@ -123,9 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
+
       // checks if user has penalty or not
       const userQuery = query(collection(db, "users"), where("fullName", "==", borrower));
       const userSnap = await getDocs(userQuery);
+
+
       if (!userSnap.empty) {
         const userData = userSnap.docs[0].data();
         if (userData.penalty === true) {
@@ -159,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
           borrowDate,
           returnDate,
           borrower,
+          email,
           status: "pending"
         });
         alert("Borrow request sent for admin confirmation.");

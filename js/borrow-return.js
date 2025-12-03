@@ -107,9 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const borrowDate = Timestamp.fromDate(new Date(borrowDateInput));
       const returnDate = Timestamp.fromDate(new Date(returnDateInput));
       const borrower = localStorage.getItem("fullName") || "Unknown";
+      const email = localStorage.getItem("email" || "Unkown");
       
 
-      console.log({ equipmentId, quantity, borrowDate, returnDate, borrower });
+      console.log({ equipmentId, quantity, borrowDate, returnDate, borrower, email });
 
       if (!equipmentId) {
         alert("Please select equipment.");
@@ -133,6 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // checks if user has penalty or not
       const userQuery = query(collection(db, "users"), where("fullName", "==", borrower));
       const userSnap = await getDocs(userQuery);
+
+
       if (!userSnap.empty) {
         const userData = userSnap.docs[0].data();
         if (userData.penalty === true) {
@@ -166,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
           borrowDate,
           returnDate,
           borrower,
+          email,
           status: "pending"
         });
         alert("Borrow request sent for admin confirmation.");

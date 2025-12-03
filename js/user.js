@@ -3,6 +3,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth
 
 document.addEventListener("DOMContentLoaded", function() {
     const userName = localStorage.getItem("fullName") || "USER NAME";
+    const email = localStorage.getItem("email") || "EMAIL ADDRESS"
     document.getElementById("userName").textContent = userName;
 
     const borrowBtn = document.querySelector(".borrow");

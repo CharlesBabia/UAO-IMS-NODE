@@ -92,7 +92,7 @@ async function renderBorrowedList() {
           Borrower: ${req.borrower} | Borrow Date: ${borrowDate ? borrowDate.toLocaleString() : "N/A"} |
           Return Date: ${returnDate ? returnDate.toLocaleString() : "N/A"} | Quantity: ${req.quantity}
         </span>
-        ${req.returnDate < new Date() ? '<p style="color:red; font-weight:bold; margin-top:5px;">Overdue!</p>' : ''}
+        ${returnDate && returnDate < new Date() ? '<p style="color:red; font-weight:bold; margin-top:5px;">Overdue!</p>' : ''}
         <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
           <label>Good:<br><input type="number" min="0" max="${req.quantity}" value="${req.quantity}" class="return-good" data-id="${docSnap.id}" style="width:160px;"></label>
           <label>Damaged:<br> <input type="number" min="0" max="${req.quantity}" value="0" class="return-damaged" data-id="${docSnap.id}" style="width:160px;"></label>
@@ -104,7 +104,7 @@ async function renderBorrowedList() {
       borrowedList.appendChild(li);
     }
     // Send overdue email to borrower
-    if (returnDate < new Date()) {
+    if (returnDate && returnDate < new Date()) {
       const borrowerEmail = await getUserEmailByName(req.borrower);
       if (borrowerEmail) {
         sendMail(
@@ -181,15 +181,28 @@ async function renderBorrowedList() {
         }
 
         // Set user penalty to true
-        const reqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
-        if (!reqDoc.empty) {
-          const reqData = reqDoc.docs[0].data();
+        const borrowReqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
+        if (!borrowReqDoc.empty) {
+          const reqData = borrowReqDoc.docs[0].data();
           const borrowerName = reqData.borrower;
           const userQuery = query(collection(db, "users"), where("fullName", "==", borrowerName));
           const userSnap = await getDocs(userQuery);
           if (!userSnap.empty) {
             const userDoc = userSnap.docs[0];
             await updateDoc(doc(db, "users", userDoc.id), { penalty: true });
+          }
+        }
+      } else {
+        // Set user penalty to false if no damaged equipment
+        const borrowReqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
+        if (!borrowReqDoc.empty) {
+          const reqData = borrowReqDoc.docs[0].data();
+          const borrowerName = reqData.borrower;
+          const userQuery = query(collection(db, "users"), where("fullName", "==", borrowerName));
+          const userSnap = await getDocs(userQuery);
+          if (!userSnap.empty) {
+            const userDoc = userSnap.docs[0];
+            await updateDoc(doc(db, "users", userDoc.id), { penalty: false });
           }
         }
       }
@@ -243,6 +256,8 @@ async function renderConfirmList() {
 
       // Find equipments by name
       const eqQuery = query(collection(db, "equipment"), where("name", "==", eqName));
+      const usQuery = query(collection(db, "users"));
+      const usSnapshot = await getDocs(usQuery);
       const eqSnapshot = await getDocs(eqQuery);
 
       if (!eqSnapshot.empty) {
@@ -255,10 +270,23 @@ async function renderConfirmList() {
 
       await updateDoc(doc(db, "borrowRequests", id), { status: "borrowed" });
 
+      // Set user penalty to true
+      const confirmReqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
+      if (!confirmReqDoc.empty) {
+        const reqData = confirmReqDoc.docs[0].data();
+        const borrowerName = reqData.borrower;
+        const userQuery = query(collection(db, "users"), where("fullName", "==", borrowerName));
+        const userSnap = await getDocs(userQuery);
+        if (!userSnap.empty) {
+          const userDoc = userSnap.docs[0];
+          await updateDoc(doc(db, "users", userDoc.id), { penalty: true });
+        }
+      }
+
       // Send approval email
-      const reqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
-      if (!reqDoc.empty) {
-        const reqData = reqDoc.docs[0].data();
+      const approvalReqDoc = await getDocs(query(collection(db, "borrowRequests"), where("__name__", "==", id)));
+      if (!approvalReqDoc.empty) {
+        const reqData = approvalReqDoc.docs[0].data();
         const borrowerEmail = await getUserEmailByName(reqData.borrower);
         if (borrowerEmail) {
           sendMail(
@@ -333,7 +361,7 @@ async function renderManageEquipment() {
     manageList.appendChild(li);
   });
 
-  // Save changes
+  // update/Save Changes button
   manageList.querySelectorAll('.save-eq-btn').forEach(btn => {
     if (btn.disabled) return;
 
@@ -395,7 +423,7 @@ async function renderManageEquipment() {
   });
 }
 
-// ====================== EQUIPMENT LOGS TAB ======================
+// equipment logs tab
 async function renderEquipmentLogs() {
   const logsList = document.getElementById('equipmentLogsList');
   if (!logsList) return;
@@ -422,7 +450,7 @@ async function renderEquipmentLogs() {
   });
 }
 
-// ====================== BORROW HISTORY TAB ======================
+// borrow history tab
 async function renderBorrowHistory() {
   const historyList = document.getElementById('borrowHistoryList');
   if (!historyList) return;
@@ -450,7 +478,7 @@ async function renderBorrowHistory() {
   });
 }
 
-// ====================== ADD EQUIPMENT ======================
+// add equipment function
 const showAdd = document.getElementById('showAdd');
 const addSection = document.getElementById('addSection');
 const addEquipmentForm = document.getElementById('addEquipmentForm');
@@ -490,7 +518,7 @@ if (addEquipmentForm) {
   });
 }
 
-// ====================== TAB SWITCHING ======================
+// tab switcing logic
 const showReturn = document.getElementById('showReturn');
 const showConfirm = document.getElementById('showConfirm');
 const showManage = document.getElementById('showManage');

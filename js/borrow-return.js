@@ -94,6 +94,23 @@ document.addEventListener("DOMContentLoaded", () => {
     populateFilterOptions();
   }
 
+  // Disable past dates part
+  const borrowDateInput = document.querySelector(".date-input");
+  const returnDateInput = document.querySelector(".return-date-input");
+
+  if (borrowDateInput && returnDateInput) {
+    const today = new Date().toISOString().split("T")[0];
+    borrowDateInput.setAttribute("min", today);
+    returnDateInput.setAttribute("min", today);
+
+    borrowDateInput.addEventListener("change", () => {
+      const selectedBorrowDate = borrowDateInput.value;
+      if (selectedBorrowDate) {
+        returnDateInput.setAttribute("min", selectedBorrowDate);
+      }
+    });
+  }
+
   // submission of borrow form
   if (borrowForm) {
     borrowForm.addEventListener("submit", async function(e) {
